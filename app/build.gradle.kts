@@ -55,7 +55,15 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
     // add constraint layout compose which has added from 'libs.versions.toml' with type our lib destination and replace '-' with '.'
     implementation(libs.compose.constraint.layout)
+    // ViewModel + Compose integration
+    implementation(libs.lifecycle.viewmodel.compose)
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    // Retrofit + Gson
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }
