@@ -104,3 +104,18 @@ ConstraintLayout Compose	    Layout fleksibel berbasis constraint
 Material 3	                    Komponen UI modern dengan gaya Google Material You
 Coroutines & Flow	            State management asinkron & reaktif
 Preferences DataStore	        Penyimpanan data lokal modern & aman
+
+🖼️ Preview Tampilan
+
+| NFC Payment Screen                                                                        | Transaction History                                                                           |
+| ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| <img src="https://github.com/badri-dev/arna-tech-bri/tree/main/app/src/main/res/assets/img_1.jpeg" width="250"/> | <img src="https://github.com/badri-dev/arna-tech-bri/tree/main/app/src/main/res/assets/img_2.jpeg" width="250"/> |
+
+👨‍💻 Author
+
+Ghaushil Badri Amin
+🧩 Android Developer @ Arna Tech
+📍 Banyumas, Indonesia
+
+GitHub: @badri-dev
+
