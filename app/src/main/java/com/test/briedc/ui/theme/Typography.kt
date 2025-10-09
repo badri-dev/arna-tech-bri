@@ -24,7 +24,9 @@ data class AppTypography(
     val titleSmall: TextStyle,
     val body: TextStyle,
     val bodySmall: TextStyle,
-    val label: TextStyle
+    val label: TextStyle,
+    val labelMedium: TextStyle,
+    val labelBold: TextStyle
 )
 
 // this will being provider local typography with CompositionLocalProvider for our theme
@@ -36,7 +38,9 @@ val localAppTypography = staticCompositionLocalOf {
         titleSmall = TextStyle.Default,
         body = TextStyle.Default,
         bodySmall = TextStyle.Default,
-        label = TextStyle.Default
+        label = TextStyle.Default,
+        labelMedium = TextStyle.Default,
+        labelBold = TextStyle.Default
     )
 }
 
@@ -45,17 +49,17 @@ val extendedTypography = AppTypography(
     headLine = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 32.sp,
-        fontWeight = FontWeight.Normal
+        fontWeight = FontWeight.Bold
     ),
     titleLarge = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 24.sp,
-        fontWeight = FontWeight.Normal
+        fontWeight = FontWeight.SemiBold
     ),
     titleMedium = TextStyle(
         fontFamily = RobotoFontFamily,
         fontSize = 20.sp,
-        fontWeight = FontWeight.Normal
+        fontWeight = FontWeight.SemiBold
     ),
     titleSmall = TextStyle(
         fontFamily = RobotoFontFamily,
@@ -77,4 +81,14 @@ val extendedTypography = AppTypography(
         fontSize = 11.sp,
         fontWeight = FontWeight.Light
     ),
+    labelMedium = TextStyle(
+        fontFamily = RobotoFontFamily,
+        fontSize = 11.sp,
+        fontWeight = FontWeight.SemiBold
+    ),
+    labelBold = TextStyle(
+        fontFamily = RobotoFontFamily,
+        fontSize = 11.sp,
+        fontWeight = FontWeight.Bold
+    )
 )

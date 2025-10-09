@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.test.briedc"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.test.briedc"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -66,4 +66,11 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // Lottie Animation
+    implementation("com.airbnb.android:lottie-compose:6.3.0")
+    implementation("androidx.navigation:navigation-compose:2.8.3")
+
+    // Material Icons
+    implementation("androidx.compose.material:material-icons-extended")
 }

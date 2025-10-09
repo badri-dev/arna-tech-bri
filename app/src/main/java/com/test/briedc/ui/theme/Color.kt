@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-val BlueBRI = Color(0xFF0786C1)
+val BlueBRI = Color(0xFF3B84BC)
 val LightButton = Color(0xFF7ECDF4)
 val DarkButton = Color(0xFF2693CA)
 val Dark = Color(0xFF082533)
@@ -45,7 +45,7 @@ val localAppColors = staticCompositionLocalOf {
 
 // this will being immutable global variable AppColors for our theme
 val extendedColor = AppColors(
-    background = Color.White,
+    background = BlueBRI,
     onBackground = Dark,
     surface = LightButton,
     onSurface = DarkButton,
