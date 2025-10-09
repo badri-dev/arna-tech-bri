@@ -31,10 +31,10 @@ class TransactionsRepository(private val api: ApiServices) {
             Result.failure(e)
         }
 
-    suspend fun postSettlement(token: String, body: JsonObject): Result<SettlementModel> =
+    suspend fun postSettlement(token: String): Result<SettlementModel> =
         try {
             val resp = withContext(Dispatchers.IO) {
-                api.postSettlement(body, token)
+                api.postSettlement(token)
             }
             Result.success(resp)
         } catch (e: Exception) {

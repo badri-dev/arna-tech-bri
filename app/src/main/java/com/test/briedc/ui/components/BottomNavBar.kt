@@ -44,11 +44,11 @@ fun BottomNavBar(
             )
             .background(Color.White)
     ) {
-        val (sale, history, settlement) = createRefs()
+        val (sale, history) = createRefs()
 
         // buat horizontal chain agar rata
         createHorizontalChain(
-            sale, history, settlement,
+            sale, history,
             chainStyle = ChainStyle.Spread
         )
 
@@ -69,17 +69,6 @@ fun BottomNavBar(
             selected = selectedIndex == 1,
             onClick = { onItemSelected(1) },
             modifier = Modifier.constrainAs(history) {
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-            }
-        )
-
-        BottomNavItem(
-            title = "Settlement",
-            icon = Icons.Default.Settings,
-            selected = selectedIndex == 2,
-            onClick = { onItemSelected(2) },
-            modifier = Modifier.constrainAs(settlement) {
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
             }

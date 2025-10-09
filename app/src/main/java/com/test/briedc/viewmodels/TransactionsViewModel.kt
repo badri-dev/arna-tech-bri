@@ -49,10 +49,10 @@ class TransactionsViewModel : ViewModel() {
     // Data State for our collectors post settlement
     private val _stateSettlement = MutableStateFlow<UIStateResponse<SettlementModel?>>(UIStateResponse.Loading)
     val stateSettlement: StateFlow<UIStateResponse<SettlementModel?>> = _stateSettlement
-    fun postSettlement(token: String, body: JsonObject) {
+    fun postSettlement(token: String) {
         _stateSettlement.value = UIStateResponse.Loading
         viewModelScope.launch {
-            val resp = repo.postSettlement(token, body)
+            val resp = repo.postSettlement(token)
             if (resp.isSuccess) {
                 _stateSettlement.value = UIStateResponse.Success(resp.getOrNull())
             } else {

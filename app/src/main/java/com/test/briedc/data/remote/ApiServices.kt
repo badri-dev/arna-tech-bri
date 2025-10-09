@@ -37,7 +37,6 @@ interface ApiServices {
 
     @POST("transactions/settlement")
     suspend fun postSettlement(
-        @Body body: JsonObject,
         @Header("authorization") bearer: String
     ): SettlementModel
 }
