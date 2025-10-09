@@ -19,6 +19,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Money
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -161,7 +162,7 @@ fun InputTransactionDetail(isFrom: String?, context: Context, navHostController:
                 value = amount,
                 placeHolder = "Masukan nominal disini..",
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                icon = Icons.Default.Email,
+                icon = Icons.Default.Money,
                 iconColor = AppTheme.colors.background,
                 cursorColor = AppTheme.colors.surface,
                 isPassword = false,
