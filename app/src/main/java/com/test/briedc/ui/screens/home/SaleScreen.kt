@@ -11,19 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CreditCard
-import androidx.compose.material.icons.filled.Keyboard
-import androidx.compose.material.icons.filled.Nfc
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -31,16 +25,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavHostController
 import com.test.briedc.R
+import com.test.briedc.router.Screens
 import com.test.briedc.ui.components.PaymentButton
 import com.test.briedc.ui.theme.AppTheme
+import kotlinx.coroutines.delay
 
 @Composable
 fun SaleScreen(context: Context, navHostController: NavHostController) {
@@ -123,9 +117,8 @@ fun SaleScreen(context: Context, navHostController: NavHostController) {
                 .background(Color.White)
                 .padding(8.dp)
         ) {
-            var message by remember { mutableStateOf("") }
-            var showManualEntry by remember { mutableStateOf(false) }
             var cardNumber by remember { mutableStateOf("") }
+            var destination by remember { mutableStateOf("") }
 
             Column(
                 modifier = Modifier
@@ -143,62 +136,99 @@ fun SaleScreen(context: Context, navHostController: NavHostController) {
                     style = AppTheme.typography.titleMedium
                 )
 
-                // 🟢 Insert (Chip)
-                PaymentButton(
-                    icon = Icons.Default.CreditCard,
-                    text = "Insert (Chip)",
-                    color = Color(0xFF4CAF50),
-                    onClick = {
-                        showManualEntry = false
-                        message = "Reading Chip…"
-                    }
-                )
-
                 // 🔵 Tap (Contactless)
                 PaymentButton(
-                    icon = Icons.Default.Nfc,
+                    iconRes = R.drawable.ic_tap,
                     text = "Tap (Contactless)",
                     color = Color(0xFF2196F3),
                     onClick = {
-                        showManualEntry = false
-                        message = "Reading NFC Card…"
+                        destination = "tap"
+                    }
+                )
+
+                // 🟢 Insert (Chip)
+                PaymentButton(
+                    iconRes = R.drawable.ic_chip,
+                    text = "Insert (Chip)",
+                    color = Color(0xFF29AE40),
+                    onClick = {
+                        destination = "chip"
                     }
                 )
 
                 // 🟠 Manual Entry
                 PaymentButton(
-                    icon = Icons.Default.Keyboard,
+                    iconRes = R.drawable.ic_manual,
                     text = "Manual Entry",
                     color = Color(0xFFFF9800),
                     onClick = {
-                        showManualEntry = true
-                        message = ""
+                        destination = "manual"
                     }
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
                 // Dynamic content
-                when {
-                    message.isNotEmpty() -> {
-                        Text(
-                            text = message,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = MaterialTheme.colorScheme.primary
-                        )
+                when (destination) {
+                    "chip" -> {
+                        directTransactionDetail("chip", navHostController)
                     }
 
-                    showManualEntry -> {
-                        OutlinedTextField(
-                            value = cardNumber,
-                            onValueChange = { cardNumber = it },
-                            label = { Text("Enter Card Number") },
-                            modifier = Modifier.fillMaxWidth(0.9f)
-                        )
+                    "tap" -> {
+                        directTransactionDetail("tap", navHostController)
+                    }
+
+                    "manual" -> {
+                        directTransactionDetail("manual", navHostController)
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun directTransactionDetail(destination: String, navHostController: NavHostController) {
+    LaunchedEffect(Unit)  {
+        delay(500)
+        navHostController.navigate(Screens.TransactionDetail.routeExtras(destination))
+    }
+}
+
+@Composable
+fun directChip(navHostController: NavHostController) {
+    LaunchedEffect(Unit)  {
+        delay(500)
+        navHostController.navigate(Screens.Chip.route) {
+            popUpTo(navHostController.currentDestination?.id ?: return@navigate) {
+                inclusive = true // Hapus screen saat ini dari stack
+            }
+            launchSingleTop = true // Hindari membuat instance baru jika sudah di atas stack
+        }
+    }
+}
+
+@Composable
+fun directCardless(datas: String, navHostController: NavHostController) {
+    LaunchedEffect(Unit)  {
+        delay(500)
+        navHostController.navigate(Screens.Cardless.routeExtras(datas)) {
+            popUpTo(navHostController.currentDestination?.id ?: return@navigate) {
+                inclusive = true // Hapus screen saat ini dari stack
+            }
+        }
+    }
+}
+
+@Composable
+fun directManual(navHostController: NavHostController) {
+    LaunchedEffect(Unit)  {
+        delay(500)
+        navHostController.navigate(Screens.Manual.route) {
+            popUpTo(navHostController.currentDestination?.id ?: return@navigate) {
+                inclusive = true // Hapus screen saat ini dari stack
+            }
+            launchSingleTop = true // Hindari membuat instance baru jika sudah di atas stack
         }
     }
 }

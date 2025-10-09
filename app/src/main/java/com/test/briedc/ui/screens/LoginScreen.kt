@@ -241,6 +241,7 @@ fun LoginScreen(context: Context, navHostController: NavHostController) {
                     AppPreferencesManager.setString(context, GlobalUtils.TOKEN_KEY, userToken.token)
                     doLogin(navHostController)
                 }
+                else -> Unit
             }
 
             InteractiveButton(

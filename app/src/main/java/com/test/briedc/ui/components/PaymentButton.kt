@@ -16,15 +16,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
 
 @Composable
 fun PaymentButton(
-    icon: ImageVector,
+    iconRes: Int,
     text: String,
     color: Color,
     onClick: () -> Unit
@@ -35,7 +36,7 @@ fun PaymentButton(
             .height(60.dp)
             .shadow(6.dp, RoundedCornerShape(14.dp))
             .clickable { onClick() },
-        color = color,
+        color = Color.White,
         shape = RoundedCornerShape(14.dp)
     ) {
         Row (
@@ -45,16 +46,15 @@ fun PaymentButton(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Icon(
-                imageVector = icon,
+            Image(
+                painter = painterResource(id = iconRes),
                 contentDescription = text,
-                tint = Color.White,
-                modifier = Modifier.size(28.dp)
+                modifier = Modifier.size(48.dp)
             )
             Text(
                 text = text,
                 fontSize = 18.sp,
-                color = Color.White,
+                color = color,
                 fontWeight = FontWeight.Bold
             )
         }

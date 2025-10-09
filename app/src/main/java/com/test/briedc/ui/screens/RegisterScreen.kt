@@ -274,6 +274,7 @@ fun RegisterScreen(context: Context, navigationController: NavHostController) {
                     isErrorInput = false
                     doRegister(context, registerResponse.message, navigationController)
                 }
+                else -> Unit
             }
 
             InteractiveButton(

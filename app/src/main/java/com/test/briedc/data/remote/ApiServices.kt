@@ -8,6 +8,7 @@ import com.test.briedc.data.models.SaleModel
 import com.test.briedc.data.models.SettlementModel
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiServices {
@@ -24,15 +25,19 @@ interface ApiServices {
 
     /** Transaction **/
     @GET("transactions/history")
-    suspend fun getTransactionHistory(): List<HistoryModel>
+    suspend fun getTransactionHistory(
+        @Header("authorization") bearer: String
+    ): List<HistoryModel>
 
     @POST("transactions/sale")
     suspend fun postSale(
-        @Body body: JsonObject
+        @Body body: JsonObject,
+        @Header("authorization") bearer: String
     ): SaleModel
 
     @POST("transactions/settlement")
     suspend fun postSettlement(
-        @Body body: JsonObject
+        @Body body: JsonObject,
+        @Header("authorization") bearer: String
     ): SettlementModel
 }
