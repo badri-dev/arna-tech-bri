@@ -15,8 +15,12 @@ sealed class Screens(val route: String) {
     object Cardless: Screens("cardless/{datas}") {
         fun routeExtras(datas: String) = "cardless/$datas"
     }
-    object Chip: Screens("chip")
-    object Manual: Screens("manual")
+    object Chip: Screens("chip/{datas}"){
+        fun routeExtras(datas: String) = "chip/$datas"
+    }
+    object Manual: Screens("manual/{datas}"){
+        fun routeExtras(datas: String) = "manual/$datas"
+    }
     object TransactionDetail: Screens("detail/{from}") {
         fun routeExtras(from: String) = "detail/$from"
     }

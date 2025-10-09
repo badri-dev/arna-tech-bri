@@ -253,7 +253,8 @@ fun InputTransactionDetail(isFrom: String?, context: Context, navHostController:
 fun directPayment(datas: DetailTransaction, from: String?, navHostController: NavHostController) {
     when (from) {
         "chip" -> {
-            directChip(navHostController)
+            val json = Uri.encode(Gson().toJson(datas))
+            directChip(json, navHostController)
         }
 
         "tap" -> {
@@ -262,7 +263,8 @@ fun directPayment(datas: DetailTransaction, from: String?, navHostController: Na
         }
 
         "manual" -> {
-            directManual(navHostController)
+            val json = Uri.encode(Gson().toJson(datas))
+            directManual(json, navHostController)
         }
     }
 }

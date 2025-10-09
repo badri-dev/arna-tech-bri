@@ -5,10 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import com.test.briedc.data.models.DetailTransaction
 import com.test.briedc.ui.theme.AppTheme
 
 @Composable
-fun ManualScreen(context: Context, navHostController: NavHostController) {
+fun ManualScreen(datas: DetailTransaction?, context: Context, navHostController: NavHostController) {
 
 }
 
@@ -18,6 +19,6 @@ fun ManualScreenPreview() {
     AppTheme {
         val context = LocalContext.current
         val navHostController = NavHostController(context)
-        ManualScreen(context, navHostController)
+        ManualScreen(null, context, navHostController)
     }
 }

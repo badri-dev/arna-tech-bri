@@ -196,10 +196,10 @@ fun directTransactionDetail(destination: String, navHostController: NavHostContr
 }
 
 @Composable
-fun directChip(navHostController: NavHostController) {
+fun directChip(datas: String, navHostController: NavHostController) {
     LaunchedEffect(Unit)  {
         delay(500)
-        navHostController.navigate(Screens.Chip.route) {
+        navHostController.navigate(Screens.Chip.routeExtras(datas)) {
             popUpTo(navHostController.currentDestination?.id ?: return@navigate) {
                 inclusive = true // Hapus screen saat ini dari stack
             }
@@ -221,14 +221,13 @@ fun directCardless(datas: String, navHostController: NavHostController) {
 }
 
 @Composable
-fun directManual(navHostController: NavHostController) {
+fun directManual(datas: String, navHostController: NavHostController) {
     LaunchedEffect(Unit)  {
         delay(500)
-        navHostController.navigate(Screens.Manual.route) {
+        navHostController.navigate(Screens.Manual.routeExtras(datas)) {
             popUpTo(navHostController.currentDestination?.id ?: return@navigate) {
                 inclusive = true // Hapus screen saat ini dari stack
             }
-            launchSingleTop = true // Hindari membuat instance baru jika sudah di atas stack
         }
     }
 }

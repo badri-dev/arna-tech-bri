@@ -54,11 +54,26 @@ fun AppNavigations(context: Context, navigationController: NavHostController) {
             val data = Gson().fromJson(datas, DetailTransaction::class.java)
             CardlessScreen(data, context, navigationController)
         }
-        composable(Screens.Chip.route) {
-            ChipScreen(context, navigationController)
+
+        composable(
+            Screens.Chip.route,
+            arguments = listOf(
+                navArgument("datas") { type = NavType.StringType }
+            )
+            ) { backStackEntry ->
+            val datas = backStackEntry.arguments?.getString("datas")
+            val data = Gson().fromJson(datas, DetailTransaction::class.java)
+            ChipScreen(data, context, navigationController)
         }
-        composable(Screens.Manual.route) {
-            ManualScreen(context, navigationController)
+        composable(
+            Screens.Manual.route,
+            arguments = listOf(
+                navArgument("datas") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val datas = backStackEntry.arguments?.getString("datas")
+            val data = Gson().fromJson(datas, DetailTransaction::class.java)
+            ManualScreen(data, context, navigationController)
         }
         composable(
             Screens.TransactionDetail.route,
