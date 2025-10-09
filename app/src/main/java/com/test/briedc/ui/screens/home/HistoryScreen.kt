@@ -18,6 +18,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,6 +34,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.gson.JsonObject
@@ -58,11 +62,27 @@ fun HistoryScreen(context: Context, navHostController: NavHostController) {
     var buttonClicked by remember { mutableStateOf(false) }
     var dataReceived by remember { mutableStateOf(false) }
 
-    val transactions = listOf(
-        Triple("TXN001", "BRI Mall Jakarta", "IDR 250.000") to "Approved",
-        Triple("TXN002", "Indomaret Citra", "IDR 120.000") to "Settled",
-        Triple("TXN003", "KFC Dago", "IDR 75.000") to "Approved"
-    )
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_RESUME -> {
+                    transactionVM.loadTransactionHistory("Bearer ${AppPreferencesManager.getString(context, GlobalUtils.TOKEN_KEY, "")}")
+                }
+                Lifecycle.Event.ON_PAUSE -> {
+                    println("Screen paused")
+                }
+                else -> {}
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
 
     ConstraintLayout(
         modifier = Modifier
@@ -139,13 +159,15 @@ fun HistoryScreen(context: Context, navHostController: NavHostController) {
             }
             is UIStateResponse.Error -> {
                 buttonClicked = false
+                transactionVM.clearStateSettlement()
                 Toast.makeText(context, "$s.message", Toast.LENGTH_SHORT).show()
             }
             is UIStateResponse.Success -> {
                 buttonClicked = false
-                listHistory.clear()
+                transactionVM.clearStateSettlement()
                 // Load data
                 dataReceived = false
+                Toast.makeText(context, "${s.response?.records_updated} ${s.response?.message}", Toast.LENGTH_SHORT).show()
                 transactionVM.loadTransactionHistory("Bearer ${AppPreferencesManager.getString(context, GlobalUtils.TOKEN_KEY, "")}")
             }
             else -> Unit
@@ -179,8 +201,6 @@ fun HistoryScreen(context: Context, navHostController: NavHostController) {
                 dataReceived = true
                 settledCount = history.count { item -> item.status == "settled" }
                 approvedCount = history.count { item -> item.status == "approved" }
-                listHistory.clear()
-                listHistory.addAll(history)
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -192,7 +212,7 @@ fun HistoryScreen(context: Context, navHostController: NavHostController) {
                             height = androidx.constraintlayout.compose.Dimension.fillToConstraints
                         }
                 ) {
-                    items(listHistory) { history ->
+                    items(history) { history ->
                         HistoryItems(
                             id = history.id.toString(),
                             merchant = history.merchantId,

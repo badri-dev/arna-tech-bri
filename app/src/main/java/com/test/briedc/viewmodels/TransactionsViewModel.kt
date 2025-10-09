@@ -65,4 +65,8 @@ class TransactionsViewModel : ViewModel() {
     fun clearStateSale() {
         _stateSale.value = UIStateResponse.Idle // atau default lain
     }
+
+    fun clearStateSettlement() {
+        _stateSettlement.value = UIStateResponse.Idle
+    }
 }
